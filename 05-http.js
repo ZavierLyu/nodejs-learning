@@ -22,17 +22,36 @@ var server = http.createServer()
 //          请求对象课以用来获取客户端的一些请求信息，例如请求路径
 
 server.on('request', function(request, response) {
-
-
+    
     console.log('收到客户端请求了，请求路径是：' + request.url)
+    console.log('请求我的客户端的地址是：' , request.socket.remoteAddress, request.socket.remotePort)
+    
     // response 对象又一个方法： write可以以用来给客户端发送响应数据
     // write可以使用多次，但最后一次一定要使用end来结束响应
     var url = request.url
     if (request.url === "/login") {
-        response.write("login ")
-        response.end
+        // response.write("login ")
+        response.end("login")
     }
-    response.end(JSON.stringify(10086))
+    // 在服务器默认发送的数据，其实是utf8编码的内容
+    // 但是浏览器不知到你是utf8编码
+    // 浏览齐在不知道服务器响应内容的编码的情况下会按照当前操作系统的莫仍编码去解析
+    // 中文操作系统默认是gbk
+    // 解决方案就是正确的告诉浏览齐我给你发送的内容是什么编码的
+    
+    
+    if (request.url === '/plain') {
+        response.setHeader('Content-Type', 'text/plain; charset=utf-8')
+        response.end("纯文本")
+    } else if (request.url === '/html') {
+        response.setHeader('Content-Type', 'text/html; charset=utf-8')
+        response.end("<p style='color:red'>你好<p>")
+    }
+    
+    
+    
+    
+    response.end("index")
 })
 
 // 4. 绑定端口号，启动服务器
