@@ -182,7 +182,7 @@ exports = module.exports
 exports.foo = 'bar'
 ```
 
-```javascript
+```javascriptv
 Array.prototype.mySlice = function () {
   var start = 0
   var end = this.length
@@ -228,6 +228,15 @@ var fakeArr = {
 - package.json 包描述文件
   + dependencies 选项的作用
 - npm 常用命令
+```shell
+npm init #生成package-json
+npm install <package> #只下载
+npm install <package> --save #下载并且保存在package.json
+npm install #install package.json
+npm uninstall <package> #如果有dependency依然保存
+npm uninstall --save <package>
+npm help
+```
 - Express 基本使用
 
 - 使用 Express 把之前的留言本案例自己动手改造一下
